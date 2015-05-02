@@ -205,6 +205,7 @@ int ChatServer::RecieveClientMessage(SOCKET socketClient)
 int ChatServer::SendServerMessage(SOCKET sClients, char *sMessage)
 {
     int iRetCode = SOCKET_ERROR;
+    char cTimeStamp[g_ciBufferLength] = { 0 };
 
     for (int i = 0; i < m_vecClientSockets.size(); i++)
     {        
@@ -217,6 +218,9 @@ int ChatServer::SendServerMessage(SOCKET sClients, char *sMessage)
             {
                 cout << "send failed with error: " << WSAGetLastError() << endl;
                 closesocket(m_vecClientSockets[i]);
+                timestamp(cTimeStamp);
+                m_LogFile << "Client : " << m_vecClientSockets[i] << " connection closed at " << cTimeStamp << endl;
+                cout << "Client : " << m_vecClientSockets[i] << " connection closed at " << cTimeStamp << endl;
                 //m_vecClientSockets.erase(i);
                 WSACleanup();
                 return iRetCode;

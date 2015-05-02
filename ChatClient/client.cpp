@@ -59,7 +59,7 @@ int ChatClient::Setup(unsigned int uiPort)
         return 1;
     }
 
-    unsigned int addr = inet_addr("192.168.0.103"/*"127.0.0.1"*/);
+    unsigned int addr = inet_addr("129.135.52.205");//"127.0.0.1"
     struct hostent *hp =gethostbyaddr((char*)&addr,sizeof(addr),AF_INET);
 
     if( hp == NULL )
@@ -130,7 +130,7 @@ int ChatClient::RecvServerMessage()
         if ( iResult > 0 )
         {
             cout << "-->" << recvbuf << endl;
-            break;
+            //break; //break is the culprit
         }
         else if ( iResult == 0 )
             cout << "Connection closed" << endl;
